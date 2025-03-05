@@ -1,8 +1,9 @@
 import 'package:bookworm/features/auth/data/firebase_auth_repo.dart';
-import 'package:bookworm/features/auth/home/presentation/pages/home_page.dart';
+import 'package:bookworm/features/home/presentation/pages/home_page.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_state.dart';
 import 'package:bookworm/features/auth/presentation/pages/auth_page.dart';
+import 'package:bookworm/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: lightTheme,
         home: BlocConsumer<AuthBloc, AuthState>(
           builder: (context, state) {
             // authenticated
