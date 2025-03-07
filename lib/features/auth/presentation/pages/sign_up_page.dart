@@ -25,7 +25,7 @@ class SignUpPage extends StatelessWidget {
       // validate email & pwd & name
       final email = emailController.text;
       final pwd = pwdController.text;
-      final name = pwdController.text;
+      final name = nameController.text;
       if (email.isNotEmpty && pwd.isNotEmpty && name.isNotEmpty) {
         authBloc.add(
           AuthSignUpWithEmailAndPwdRequested(

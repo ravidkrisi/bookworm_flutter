@@ -3,6 +3,9 @@ import 'package:bookworm/features/home/presentation/pages/home_page.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_state.dart';
 import 'package:bookworm/features/auth/presentation/pages/auth_page.dart';
+import 'package:bookworm/features/profile/data/firebase_profile_repo.dart';
+import 'package:bookworm/features/profile/presentation/blocs/profile_bloc.dart';
+import 'package:bookworm/features/storage/data/firebase_storage_repo.dart';
 import 'package:bookworm/theme/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +13,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MyApp extends StatelessWidget {
   // auth firebase repo
   final firebaseAuthRepo = FirebaseAuthRepo();
+  // profile firebase repo
+  final firebaseProfileRepo = FirebaseProfileRepo(
+    storageRepo: FirebaseStorageRepo(),
+  );
 
   MyApp({super.key});
 
@@ -20,6 +27,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(repo: firebaseAuthRepo),
         ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(repo: firebaseProfileRepo),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -28,7 +38,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             // authenticated
             if (state is AuthAuthenticated) {
-              return HomePage();
+              return HomePage(currUid: state.user.uid);
             }
             // unauthenticated
             else if (state is AuthUnauthenticated) {

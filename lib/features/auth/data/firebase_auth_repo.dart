@@ -22,8 +22,6 @@ class FirebaseAuthRepo extends AuthRepo {
         password: pwd,
       );
 
-      print('im here2');
-
       // add user to firestore
       final uid = userCred.user?.uid;
 
