@@ -1,3 +1,4 @@
+import 'package:bookworm/features/books/presentation/pages/books_page.dart';
 import 'package:bookworm/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     tabs = {
-      'home': {'icon': Icon(FontAwesomeIcons.house), 'page': Text('home')},
+      'home': {'icon': Icon(FontAwesomeIcons.house), 'page': BooksPage()},
       'profile': {
         'icon': Icon(FontAwesomeIcons.person),
         'page': ProfilePage(uid: widget.currUid),

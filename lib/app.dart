@@ -1,4 +1,7 @@
 import 'package:bookworm/features/auth/data/firebase_auth_repo.dart';
+import 'package:bookworm/features/books/data/datasources/books_remote_data_source.dart';
+import 'package:bookworm/features/books/data/repos/books_repo_impl.dart';
+import 'package:bookworm/features/books/presentation/blocs/books_bloc.dart';
 import 'package:bookworm/features/home/presentation/pages/home_page.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_state.dart';
@@ -17,6 +20,8 @@ class MyApp extends StatelessWidget {
   final firebaseProfileRepo = FirebaseProfileRepo(
     storageRepo: FirebaseStorageRepo(),
   );
+  // books repo
+  final booksRepo = BooksRepoImpl(db: BooksRemoteDataSourceImpl());
 
   MyApp({super.key});
 
@@ -24,11 +29,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        // AUTH BLOC
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(repo: firebaseAuthRepo),
         ),
+
+        // PROFILE BLOC
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(repo: firebaseProfileRepo),
+        ),
+
+        // BOOKS BLOC
+        BlocProvider<BooksBloc>(
+          create: (context) => BooksBloc(repo: booksRepo),
         ),
       ],
       child: MaterialApp(
