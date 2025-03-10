@@ -1,5 +1,5 @@
 import 'package:bookworm/features/auth/data/firebase_auth_repo.dart';
-import 'package:bookworm/features/books/data/datasources/books_remote_data_source.dart';
+import 'package:bookworm/features/datasources/books_remote_data_source.dart';
 import 'package:bookworm/features/books/data/repos/books_repo_impl.dart';
 import 'package:bookworm/features/books/presentation/blocs/books_bloc.dart';
 import 'package:bookworm/features/home/presentation/pages/home_page.dart';
@@ -8,6 +8,8 @@ import 'package:bookworm/features/auth/presentation/blocs/auth_state.dart';
 import 'package:bookworm/features/auth/presentation/pages/auth_page.dart';
 import 'package:bookworm/features/profile/data/firebase_profile_repo.dart';
 import 'package:bookworm/features/profile/presentation/blocs/profile_bloc.dart';
+import 'package:bookworm/features/search/data/search_repo_impl.dart';
+import 'package:bookworm/features/search/presentation/blocs/search_bloc.dart';
 import 'package:bookworm/features/storage/data/firebase_storage_repo.dart';
 import 'package:bookworm/theme/light_theme.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
   );
   // books repo
   final booksRepo = BooksRepoImpl(db: BooksRemoteDataSourceImpl());
+  // search repo
+  final searchRepo = SearchRepoImpl(db: BooksRemoteDataSourceImpl());
 
   MyApp({super.key});
 
@@ -42,6 +46,11 @@ class MyApp extends StatelessWidget {
         // BOOKS BLOC
         BlocProvider<BooksBloc>(
           create: (context) => BooksBloc(repo: booksRepo),
+        ),
+
+        // SEARCH BLOC
+        BlocProvider<SearchBloc>(
+          create: (context) => SearchBloc(repo: searchRepo),
         ),
       ],
       child: MaterialApp(

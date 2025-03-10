@@ -1,14 +1,14 @@
-import 'package:bookworm/features/datasources/books_remote_data_source.dart';
 import 'package:bookworm/features/books/domain/entities/book.dart';
-import 'package:bookworm/features/books/domain/repos/books_repo.dart';
+import 'package:bookworm/features/datasources/books_remote_data_source.dart';
+import 'package:bookworm/features/search/domain/search_repo.dart';
 
-class BooksRepoImpl implements BooksRepo {
+class SearchRepoImpl implements SearchRepo {
   final BooksRemoteDataSource db;
 
-  BooksRepoImpl({required this.db});
+  SearchRepoImpl({required this.db});
 
   @override
-  Future<List<Book>> getBooksDetails(String title) async {
+  Future<List<Book>> searchBookByTitle(String title) async {
     try {
       final booksModel = await db.getBooksDetails(title);
       final books =

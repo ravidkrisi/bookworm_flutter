@@ -9,18 +9,23 @@ abstract class BooksRemoteDataSource {
 class BooksRemoteDataSourceImpl implements BooksRemoteDataSource {
   final Dio dio = Dio();
 
+  String _generateOpenLibrarySearchUrl(String title) {
+    String encodedTitle = Uri.encodeComponent(title.trim());
+    return 'https://openlibrary.org/search.json?title=$encodedTitle';
+  }
+
   @override
   Future<List<BookModel>> getBooksDetails(String title) async {
     try {
       // Get response from API
-      final response = await dio.get(
-        'https://openlibrary.org/search.json?title=$title',
-      );
+      final uri = _generateOpenLibrarySearchUrl(title);
+      final response = await dio.get(uri);
 
       if (response.statusCode == 200) {
         try {
           // Attempt to parse response
           final data = ResponseApi.fromJson(response.data);
+          print(data.books.length);
           return data.books;
         } catch (e, stacktrace) {
           print('❌ Error decoding JSON: $e');

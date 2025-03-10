@@ -29,9 +29,10 @@ class ResponseApi {
     documentationUrl: json["documentation_url"] ?? '',
     q: json["q"] ?? '',
     offset: json["offset"],
-    books: List<BookModel>.from(
-      json["docs"].map((x) => BookModel.fromJson(x)) ?? [],
-    ),
+    books:
+        (json["docs"] ?? []) // Ensure docs is not null
+            .map<BookModel>((x) => BookModel.fromJson(x))
+            .toList(), // Convert to List<BookModel>
   );
 
   Map<String, dynamic> toJson() => {

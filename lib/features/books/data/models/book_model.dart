@@ -86,7 +86,7 @@ class BookModel {
   Book toEntity() {
     return Book(
       title: title,
-      author: authorName.first,
+      author: authorName.isEmpty ? '' : authorName.first,
       coverUrl: getCoverUrl(),
       firstPublishYear: firstPublishYear,
     );
