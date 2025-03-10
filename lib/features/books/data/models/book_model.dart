@@ -88,6 +88,7 @@ class BookModel {
       title: title,
       author: authorName.first,
       coverUrl: getCoverUrl(),
+      firstPublishYear: firstPublishYear,
     );
   }
 
