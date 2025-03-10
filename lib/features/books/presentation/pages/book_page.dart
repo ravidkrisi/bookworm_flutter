@@ -11,6 +11,14 @@ class BookPage extends StatefulWidget {
 }
 
 class _BookPageState extends State<BookPage> {
+  late BookStatus _selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedValue = widget.book.status;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +73,25 @@ class _BookPageState extends State<BookPage> {
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
+            ),
+
+            // book status
+            DropdownButton<BookStatus>(
+              value: _selectedValue,
+              items:
+                  BookStatus.values.map((status) {
+                    return DropdownMenuItem(
+                      value: status,
+                      child: Text(status.name),
+                    );
+                  }).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _selectedValue = value;
+                  });
+                }
+              },
             ),
           ],
         ),
