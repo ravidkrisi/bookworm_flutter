@@ -14,6 +14,7 @@ enum BookStatus {
 }
 
 class Book {
+  final String id;
   final String title;
   final String author;
   final String coverUrl;
@@ -21,6 +22,7 @@ class Book {
   final BookStatus status;
 
   Book({
+    required this.id,
     required this.title,
     required this.author,
     required this.coverUrl,
@@ -31,6 +33,7 @@ class Book {
   // JSON
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'author': author,
       'cover_url': coverUrl,
@@ -41,6 +44,7 @@ class Book {
 
   factory Book.fromJson(Map<String, dynamic> json) {
     return Book(
+      id: json['id'] ?? '',
       title: json['title'] ?? '',
       author: json['author'] ?? '',
       coverUrl: json['cover_url'] ?? '',
