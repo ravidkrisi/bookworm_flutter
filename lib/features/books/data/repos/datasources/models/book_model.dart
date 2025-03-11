@@ -85,7 +85,7 @@ class BookModel {
 
   Book toEntity() {
     return Book(
-      id: key,
+      id: key.replaceAll('/', '_'),
       title: title,
       author: authorName.isEmpty ? '' : authorName.first,
       coverUrl: getCoverUrl(),

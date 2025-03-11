@@ -1,6 +1,6 @@
-import 'package:bookworm/features/books/presentation/blocs/books_bloc.dart';
-import 'package:bookworm/features/books/presentation/blocs/books_event.dart';
-import 'package:bookworm/features/books/presentation/blocs/books_states.dart';
+import 'package:bookworm/features/books/presentation/bloc/books_bloc.dart';
+import 'package:bookworm/features/books/presentation/bloc/books_event.dart';
+import 'package:bookworm/features/books/presentation/bloc/books_states.dart';
 import 'package:bookworm/features/books/presentation/components/book_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:bookworm/features/books/domain/repos/books_repo.dart';
-import 'package:bookworm/features/books/presentation/blocs/books_event.dart';
-import 'package:bookworm/features/books/presentation/blocs/books_states.dart';
+import 'package:bookworm/features/books/presentation/bloc/books_event.dart';
+import 'package:bookworm/features/books/presentation/bloc/books_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {

@@ -1,5 +1,5 @@
 import 'package:bookworm/features/books/domain/entities/book.dart';
-import 'package:bookworm/features/books/presentation/pages/book_page.dart';
+import 'package:bookworm/features/book/presentation/pages/book_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

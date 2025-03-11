@@ -5,6 +5,20 @@ enum BookStatus {
   reading,
   read;
 
+  // Custom string representation
+  String get displayName {
+    switch (this) {
+      case BookStatus.wantToRead:
+        return 'want to read';
+      case BookStatus.reading:
+        return 'reading';
+      case BookStatus.read:
+        return 'read';
+      default:
+        return 'unknown';
+    }
+  }
+
   static BookStatus fromString(String? status) {
     return BookStatus.values.firstWhere(
       (value) => value.name == status,
@@ -38,7 +52,7 @@ class Book {
       'author': author,
       'cover_url': coverUrl,
       'first_publish_uear': firstPublishYear,
-      'book_status': status.name,
+      'status': status.name,
     };
   }
 
@@ -49,7 +63,25 @@ class Book {
       author: json['author'] ?? '',
       coverUrl: json['cover_url'] ?? '',
       firstPublishYear: json['first_publis_year'] ?? 0,
-      status: BookStatus.fromString(json['staus']),
+      status: BookStatus.fromString(json['status']),
+    );
+  }
+
+  Book copyWith({
+    String? id,
+    String? title,
+    String? author,
+    String? coverUrl,
+    int? firstPublishYear,
+    BookStatus? status,
+  }) {
+    return Book(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      author: author ?? this.author,
+      coverUrl: coverUrl ?? this.coverUrl,
+      firstPublishYear: firstPublishYear ?? this.firstPublishYear,
+      status: status ?? this.status,
     );
   }
 }

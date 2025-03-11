@@ -1,5 +1,5 @@
-import 'package:bookworm/features/books/data/models/book_model.dart';
-import 'package:bookworm/features/books/data/models/response.dart';
+import 'package:bookworm/features/books/data/repos/datasources/models/book_model.dart';
+import 'package:bookworm/features/books/data/repos/datasources/models/response.dart';
 import 'package:dio/dio.dart';
 
 abstract class BooksRemoteDataSource {
