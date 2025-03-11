@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bookworm/features/books/domain/entities/book.dart';
 import 'package:bookworm/features/profile/domain/entities/user_profile.dart';
 import 'package:bookworm/features/profile/domain/repos/profile_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,19 +16,29 @@ class FirebaseProfileRepo extends ProfileRepo {
   Future<UserProfile?> getUserProfile(String uid) async {
     try {
       // fetch user doc
-      final userDoc = await userCollection.doc(uid).get();
+      final userRef = userCollection.doc(uid);
+      final userDoc = await userRef.get();
 
-      // if user exist return object
+      // user doc exist -> user object
       if (userDoc.exists) {
-        final data = userDoc.data();
-        if (data != null) {
-          return UserProfile.fromJson(data);
-        } else {
-          return null;
+        final user = UserProfile.fromJson(
+          userDoc.data() as Map<String, dynamic>,
+        );
+
+        // check if the user has books collection
+        final booksRef = userRef.collection('books');
+        final booksDocs = await booksRef.get();
+
+        // if books exist -> add to user object
+        if (booksDocs.docs.isNotEmpty) {
+          List<Book> books =
+              booksDocs.docs.map((doc) => Book.fromJson(doc.data())).toList();
+          user.books = books;
         }
-      } else {
-        return null;
+
+        return user;
       }
+      return null;
     } catch (e) {
       throw Exception('error fetch user profile: $e');
     }

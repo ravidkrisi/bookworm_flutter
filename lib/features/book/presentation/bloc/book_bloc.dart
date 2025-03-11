@@ -26,13 +26,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     UpdateBookStatus event,
     Emitter<BookState> emit,
   ) async {
-    if (state is BookLoaded) {
-      final currentBook = (state as BookLoaded).book;
-
-      // Optimistically update UI
-      final updatedBook = currentBook!.copyWith(status: event.book.status);
-      emit(BookLoaded(book: updatedBook));
-    }
+    emit(BookLoaded(book: event.book));
 
     try {
       // Update the book in Firestore

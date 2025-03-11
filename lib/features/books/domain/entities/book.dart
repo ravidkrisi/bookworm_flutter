@@ -51,7 +51,7 @@ class Book {
       'title': title,
       'author': author,
       'cover_url': coverUrl,
-      'first_publish_uear': firstPublishYear,
+      'first_publish_year': firstPublishYear,
       'status': status.name,
     };
   }

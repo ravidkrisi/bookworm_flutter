@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bookworm/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:bookworm/features/auth/presentation/blocs/auth_event.dart';
 import 'package:bookworm/features/auth/presentation/components/my_button.dart';
+import 'package:bookworm/features/books/presentation/components/books_list.dart';
 import 'package:bookworm/features/profile/presentation/blocs/profile_bloc.dart';
 import 'package:bookworm/features/profile/presentation/blocs/profile_event.dart';
 import 'package:bookworm/features/profile/presentation/blocs/profile_states.dart';
@@ -52,10 +53,26 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // profile image
                   profileImage(state.user.profileImageUrl ?? ''),
+
                   SizedBox(height: 20),
+
+                  // email
                   Text(state.user.email),
-                  SizedBox(height: 100),
+
+                  SizedBox(height: 20),
+
+                  // books list
+                  Text(
+                    'My Books',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  state.user.books != null
+                      ? BooksList(books: state.user.books!)
+                      : Text('No Books'),
+
+                  // logout btn
                   SizedBox(
                     width: 120,
                     child: MyButton(

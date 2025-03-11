@@ -129,6 +129,8 @@ class _BookPageState extends State<BookPage> {
                           final updatedBook = widget.book.copyWith(
                             status: value,
                           );
+                          print('im here2');
+
                           bookBloc.add(
                             UpdateBookStatus(userId: userId, book: updatedBook),
                           );
