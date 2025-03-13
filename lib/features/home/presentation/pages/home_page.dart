@@ -52,13 +52,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 .map((entry) => (entry.value['page'] as Widget))
                 .toList(),
       ),
+
       // BOTTOM NAVIGATION BAR
-      bottomNavigationBar: TabBar(
-        controller: _tabController,
-        tabs:
-            tabs.entries
-                .map((entry) => Tab(icon: entry.value['icon']))
-                .toList(),
+      bottomNavigationBar: SafeArea(
+        child: TabBar(
+          controller: _tabController,
+          dividerColor: Colors.transparent,
+          indicatorColor: Colors.transparent,
+          tabs:
+              tabs.entries
+                  .map((entry) => Tab(icon: entry.value['icon']))
+                  .toList(),
+        ),
       ),
     );
   }
