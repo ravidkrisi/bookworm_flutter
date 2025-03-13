@@ -10,17 +10,12 @@ class BooksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ListView.separated(
-            itemCount: books.length,
-            separatorBuilder: (context, index) => SizedBox(height: 5),
-            itemBuilder:
-                (context, index) =>
-                    BookTile(book: books[index], showStatus: showStatus),
-          ),
-        ),
+      child: ListView.separated(
+        itemCount: books.length,
+        separatorBuilder: (context, index) => SizedBox(height: 5),
+        itemBuilder:
+            (context, index) =>
+                BookTile(book: books[index], showStatus: showStatus),
       ),
     );
   }

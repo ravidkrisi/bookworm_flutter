@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:bookworm/features/books/presentation/components/book_tile.dart';
+import 'package:bookworm/features/books/presentation/components/books_list.dart';
 import 'package:bookworm/features/search/presentation/blocs/search_bloc.dart';
 import 'package:bookworm/features/search/presentation/blocs/search_event.dart';
 import 'package:bookworm/features/search/presentation/blocs/search_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SearchPage extends StatelessWidget {
   final String currUid;
@@ -13,7 +15,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SearchController = TextEditingController();
+    final searchController = TextEditingController();
 
     Timer? debounceTimer; // Timer to handle debounce
     return SafeArea(
@@ -23,14 +25,20 @@ class SearchPage extends StatelessWidget {
           children: [
             // text field
             TextField(
-              controller: SearchController,
+              decoration: InputDecoration(
+                prefixIcon: Icon(
+                  FontAwesomeIcons.magnifyingGlass,
+                  color: Colors.grey.shade300,
+                ),
+              ),
+              controller: searchController,
 
               onChanged: (value) {
                 // Cancel any existing timer
                 debounceTimer?.cancel();
 
                 if (value.isNotEmpty) {
-                  debounceTimer = Timer(const Duration(milliseconds: 500), () {
+                  debounceTimer = Timer(const Duration(milliseconds: 300), () {
                     context.read<SearchBloc>().add(
                       SearchBookByTitleReq(title: value),
                     );
@@ -55,17 +63,9 @@ class SearchPage extends StatelessWidget {
                     return Center(child: Text('nothing found'));
                   }
                   return Expanded(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ListView.separated(
-                          itemCount: books.length,
-                          separatorBuilder:
-                              (context, index) => SizedBox(height: 5),
-                          itemBuilder:
-                              (context, index) => BookTile(book: books[index]),
-                        ),
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: BooksList(books: books),
                     ),
                   );
                 }

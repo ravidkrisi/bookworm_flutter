@@ -69,7 +69,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   state.user.books != null
-                      ? BooksList(books: state.user.books!, showStatus: true)
+                      ? Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: BooksList(
+                            books: state.user.books!,
+                            showStatus: true,
+                          ),
+                        ),
+                      )
                       : Text('No Books'),
 
                   // logout btn
