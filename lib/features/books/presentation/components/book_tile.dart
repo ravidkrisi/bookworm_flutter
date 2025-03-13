@@ -6,7 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BookTile extends StatelessWidget {
   final Book book;
-  const BookTile({super.key, required this.book});
+  final bool showStatus;
+  const BookTile({super.key, required this.book, this.showStatus = false});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,17 @@ class BookTile extends StatelessWidget {
               ],
             ),
           ),
+
+          // book status
+          showStatus
+              ? Text(
+                book.status!.displayName,
+                style: TextStyle(color: Colors.grey),
+              )
+              : Container(),
+
+          SizedBox(width: 10),
+
           // navigator -> book Page
           Icon(FontAwesomeIcons.chevronRight, color: Colors.grey),
         ],

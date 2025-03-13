@@ -58,7 +58,7 @@ class FirebaseBookRepoImpl implements FirebaseBookRepo {
 
       // doc exists -> update book status
       if (doc.exists) {
-        await docRef.update({'status': book.status.name});
+        await docRef.update({'status': book.status!.name});
       }
       // doc not exist -> add book to firestore
       else {

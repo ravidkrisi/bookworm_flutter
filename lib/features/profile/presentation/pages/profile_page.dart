@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   state.user.books != null
-                      ? BooksList(books: state.user.books!)
+                      ? BooksList(books: state.user.books!, showStatus: true)
                       : Text('No Books'),
 
                   // logout btn

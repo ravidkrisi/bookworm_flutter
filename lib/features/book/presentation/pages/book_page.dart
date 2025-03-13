@@ -23,7 +23,7 @@ class _BookPageState extends State<BookPage> {
   late BookBloc bookBloc;
   late AuthBloc authBloc;
 
-  BookStatus selectedValue = BookStatus.unknown;
+  BookStatus? selectedValue;
 
   @override
   void initState() {
@@ -40,8 +40,6 @@ class _BookPageState extends State<BookPage> {
     final state = authBloc.state;
     if (state is AuthAuthenticated) {
       userId = state.user.uid;
-      print(userId);
-      print(widget.book.id);
       bookBloc.add(GetUserBook(userId: userId, bookId: widget.book.id));
     }
   }
@@ -111,9 +109,9 @@ class _BookPageState extends State<BookPage> {
 
                 // loaded
                 if (state is BookLoaded) {
-                  print('status:${state.book?.status.name ?? 'nothing'}');
-                  selectedValue = state.book?.status ?? BookStatus.unknown;
+                  selectedValue = state.book?.status;
                   return DropdownButton<BookStatus>(
+                    hint: Text('Add To List'),
                     value: selectedValue,
                     items:
                         BookStatus.values.map((status) {
@@ -129,7 +127,6 @@ class _BookPageState extends State<BookPage> {
                           final updatedBook = widget.book.copyWith(
                             status: value,
                           );
-                          print('im here2');
 
                           bookBloc.add(
                             UpdateBookStatus(userId: userId, book: updatedBook),
