@@ -12,6 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthCheckAuthRequested>(_onCheckAuth);
     on<AuthLogoutRequested>(_onLogout);
     on<AuthSignUpWithEmailAndPwdRequested>(_onSignUp);
+    on<AuthSignInWithGoogle>(_onSignInWithGoogle);
 
     // check for inital authenticaton
     add(AuthCheckAuthRequested());
@@ -83,6 +84,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthErrors(message: 'error logging in: $e'));
       emit(AuthUnauthenticated());
+    }
+  }
+
+  void _onSignInWithGoogle(
+    AuthSignInWithGoogle event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      final user = await repo.signInWithGoogle();
+      if (user != null) {
+        emit(AuthAuthenticated(user: user));
+      }
+    } catch (e) {
+      emit(AuthErrors(message: 'failed to sign in with google'));
     }
   }
 }

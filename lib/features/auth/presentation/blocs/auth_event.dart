@@ -23,5 +23,7 @@ class AuthSignUpWithEmailAndPwdRequested extends AuthEvent {
 class AuthLogoutRequested extends AuthEvent {}
 
 // check auth
-
 class AuthCheckAuthRequested extends AuthEvent {}
+
+// sign in with google
+class AuthSignInWithGoogle extends AuthEvent {}

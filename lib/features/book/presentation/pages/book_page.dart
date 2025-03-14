@@ -104,12 +104,14 @@ class _BookPageState extends State<BookPage> {
             // book title
             Text(
               widget.book.title,
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
 
             // author
             Text(
               widget.book.author,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 color: Theme.of(context).colorScheme.onSurface,

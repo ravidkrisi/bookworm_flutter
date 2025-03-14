@@ -56,7 +56,7 @@ class Book {
       title: json['title'] ?? '',
       author: json['author'] ?? '',
       coverUrl: json['cover_url'] ?? '',
-      firstPublishYear: json['first_publis_year'] ?? 0,
+      firstPublishYear: json['first_publish_year'] ?? 0,
       status:
           json['status'] != null ? BookStatus.fromString(json['status']) : null,
     );

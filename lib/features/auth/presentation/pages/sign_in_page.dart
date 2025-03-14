@@ -96,6 +96,14 @@ class SignInPage extends StatelessWidget {
 
                     MyButton(text: 'Sign In', onPressed: onSignInPressed),
 
+                    // google sign in btn
+                    IconButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(AuthSignInWithGoogle());
+                      },
+                      icon: Icon(FontAwesomeIcons.google),
+                    ),
+
                     //navigator -> sign up page
                     TextButton(
                       onPressed: togglePages,
