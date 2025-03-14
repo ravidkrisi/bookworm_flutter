@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bookworm/features/books/presentation/components/book_tile.dart';
 import 'package:bookworm/features/books/presentation/components/books_list.dart';
 import 'package:bookworm/features/search/presentation/blocs/search_bloc.dart';
 import 'package:bookworm/features/search/presentation/blocs/search_event.dart';

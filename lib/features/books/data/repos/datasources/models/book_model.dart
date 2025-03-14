@@ -88,7 +88,7 @@ class BookModel {
       id: key.replaceAll('/', '_'),
       title: title,
       author: authorName.isEmpty ? '' : authorName.first,
-      coverUrl: getCoverUrl(),
+      coverUrl: coverI == 0 ? '' : getCoverUrl(),
       firstPublishYear: firstPublishYear,
     );
   }

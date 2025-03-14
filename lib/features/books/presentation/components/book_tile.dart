@@ -31,7 +31,14 @@ class BookTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
                 imageUrl: book.coverUrl,
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                errorWidget:
+                    (context, url, error) => Center(
+                      child: Icon(
+                        FontAwesomeIcons.bookOpen,
+                        color: Colors.grey,
+                        size: 20,
+                      ),
+                    ),
                 placeholder:
                     (context, url) =>
                         Center(child: CircularProgressIndicator()),
@@ -70,13 +77,19 @@ class BookTile extends StatelessWidget {
 
           // book status
           showStatus
-              ? Text(
-                book.status!.displayName,
-                style: TextStyle(color: Colors.grey),
+              ? Row(
+                children: [
+                  SizedBox(width: 10),
+
+                  Text(
+                    book.status!.displayName,
+                    style: TextStyle(color: Colors.grey),
+                  ),
+
+                  SizedBox(width: 10),
+                ],
               )
               : Container(),
-
-          SizedBox(width: 10),
 
           // navigator -> book Page
           Icon(FontAwesomeIcons.chevronRight, color: Colors.grey),

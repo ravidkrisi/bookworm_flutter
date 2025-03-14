@@ -47,7 +47,18 @@ class _ProfilePageState extends State<ProfilePage> {
           return Scaffold(body: Center(child: CircularProgressIndicator()));
         } else if (state is ProfileLoaded) {
           return Scaffold(
-            appBar: AppBar(title: Text(state.user.name ?? '')),
+            appBar: AppBar(
+              title: Text(state.user.name ?? ''),
+              actions: [
+                // logout btn
+                IconButton(
+                  onPressed:
+                      () => context.read<AuthBloc>().add(AuthLogoutRequested()),
+                  icon: Icon(FontAwesomeIcons.rightFromBracket),
+                  color: Colors.grey,
+                ),
+              ],
+            ),
             body: SizedBox(
               width: double.infinity,
               child: Column(
@@ -79,18 +90,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       )
                       : Text('No Books'),
-
-                  // logout btn
-                  SizedBox(
-                    width: 120,
-                    child: MyButton(
-                      text: 'Logout',
-                      onPressed:
-                          () => context.read<AuthBloc>().add(
-                            AuthLogoutRequested(),
-                          ),
-                    ),
-                  ),
                 ],
               ),
             ),

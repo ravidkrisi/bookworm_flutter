@@ -28,6 +28,7 @@ class _BookPageState extends State<BookPage> {
   @override
   void initState() {
     super.initState();
+    print(widget.book.coverUrl);
     // Ensure the context has access to the Bloc
     authBloc = BlocProvider.of<AuthBloc>(context);
     bookBloc = BlocProvider.of<BookBloc>(context);
@@ -145,7 +146,6 @@ class _BookPageState extends State<BookPage> {
               },
               listener: (context, state) {
                 if (state is BookError) {
-                  print(state.message);
                   ScaffoldMessenger.of(
                     context,
                   ).showSnackBar(SnackBar(content: Text(state.message)));
