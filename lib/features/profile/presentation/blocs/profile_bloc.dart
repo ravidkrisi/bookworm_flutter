@@ -10,6 +10,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     // register events handlers
     on<ProfileFetchUserPorfileRequested>(_onFetchProfileUser);
     on<ProfileUpdateProfileImageRequested>(_onUpdateProfileUser);
+    on<ProfileBookRemoved>(_onRemoveProfileBook);
   }
 
   Future<void> _onFetchProfileUser(
@@ -42,6 +43,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       // );
     } catch (e) {
       emit(ProfileErrors(message: 'failed to update profile image: $e'));
+    }
+  }
+
+  void _onRemoveProfileBook(
+    ProfileBookRemoved event,
+    Emitter<ProfileState> emit,
+  ) async {
+    try {
+      if (state is ProfileLoaded) {
+        final updatedUser = (state as ProfileLoaded).user.copyWith(
+          books:
+              (state as ProfileLoaded).user.books
+                  ?.where((book) => book.id != event.bookId)
+                  .toList(),
+        );
+        emit(ProfileLoaded(user: updatedUser));
+      }
+    } catch (e) {
+      emit(ProfileErrors(message: 'failed to remove book: $e'));
     }
   }
 }

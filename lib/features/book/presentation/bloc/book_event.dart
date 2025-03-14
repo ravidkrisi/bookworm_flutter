@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bookworm/features/books/domain/entities/book.dart';
 
 abstract class BookEvent {}
@@ -14,4 +15,11 @@ class UpdateBookStatus extends BookEvent {
   final String userId;
   final Book book;
   UpdateBookStatus({required this.userId, required this.book});
+}
+
+// delete book
+class DeleteUserBook extends BookEvent {
+  final String userId;
+  final String bookId;
+  DeleteUserBook({required this.userId, required this.bookId});
 }

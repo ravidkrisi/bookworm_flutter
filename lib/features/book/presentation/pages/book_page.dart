@@ -4,6 +4,8 @@ import 'package:bookworm/features/book/presentation/bloc/book_bloc.dart';
 import 'package:bookworm/features/book/presentation/bloc/book_event.dart';
 import 'package:bookworm/features/book/presentation/bloc/book_states.dart';
 import 'package:bookworm/features/books/domain/entities/book.dart';
+import 'package:bookworm/features/profile/presentation/blocs/profile_bloc.dart';
+import 'package:bookworm/features/profile/presentation/blocs/profile_event.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +36,6 @@ class _BookPageState extends State<BookPage> {
     bookBloc = BlocProvider.of<BookBloc>(context);
 
     fetchCurrUser();
-    // fetchUserBook();
   }
 
   void fetchCurrUser() {
@@ -45,10 +46,33 @@ class _BookPageState extends State<BookPage> {
     }
   }
 
+  void deleteBook(BuildContext context) {
+    bookBloc.add(DeleteUserBook(userId: userId, bookId: widget.book.id));
+    context.read<ProfileBloc>().add(ProfileBookRemoved(bookId: widget.book.id));
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          // delete btn
+          BlocBuilder<BookBloc, BookState>(
+            builder: (context, state) {
+              if (state is BookLoaded) {
+                return state.book?.status != null
+                    ? IconButton(
+                      onPressed: () => deleteBook(context),
+                      icon: Icon(Icons.delete),
+                    )
+                    : Container();
+              }
+              return Container();
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           children: [

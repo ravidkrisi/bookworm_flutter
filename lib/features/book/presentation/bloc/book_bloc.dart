@@ -10,6 +10,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     // register events handlers
     on<GetUserBook>(_onGetUserBook);
     on<UpdateBookStatus>(_onUpdateBookStatus);
+    on<DeleteUserBook>(_onDeleteUserBook);
   }
 
   void _onGetUserBook(GetUserBook event, Emitter<BookState> emit) async {
@@ -33,6 +34,15 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       await repo.updateBookStatus(event.userId, event.book);
     } catch (e) {
       emit(BookError(message: 'Failed to update book status: $e'));
+    }
+  }
+
+  void _onDeleteUserBook(DeleteUserBook event, Emitter<BookState> emit) async {
+    try {
+      // Update the book in Firestore
+      await repo.deleteUserBook(event.userId, event.bookId);
+    } catch (e) {
+      emit(BookError(message: 'Failed to delete book: $e'));
     }
   }
 }

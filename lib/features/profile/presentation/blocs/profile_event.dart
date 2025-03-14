@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:typed_data';
 
 abstract class ProfileEvent {}
@@ -16,4 +17,10 @@ class ProfileUpdateProfileImageRequested extends ProfileEvent {
     required this.uid,
     required this.imagePath,
   });
+}
+
+// book being delete from profile
+class ProfileBookRemoved extends ProfileEvent {
+  final String bookId;
+  ProfileBookRemoved({required this.bookId});
 }

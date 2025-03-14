@@ -7,6 +7,10 @@ abstract class BookRepo {
 
   // get user data on book
   Future<Book?> getUserBook(String userId, String bookId);
+
+  // delete book for user's list
+
+  Future<void> deleteUserBook(String userId, String bookId);
 }
 
 class BookRepoImpl implements BookRepo {
@@ -30,6 +34,15 @@ class BookRepoImpl implements BookRepo {
       await firebaseBookRepo.updateBookStatus(userId, book);
     } catch (e) {
       throw Exception('failed to update book status in firestore: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteUserBook(String userId, String bookId) async {
+    try {
+      await firebaseBookRepo.deleteBookFromdb(userId, bookId);
+    } catch (e) {
+      throw Exception('error deleting book: $e');
     }
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bookworm/features/auth/domain/entities/app_user.dart';
 import 'package:bookworm/features/books/domain/entities/book.dart';
 
@@ -32,6 +33,22 @@ class UserProfile extends AppUser {
           (json['books'] as List<dynamic>?)
               ?.map((bookJson) => Book.fromJson(bookJson))
               .toList(),
+    );
+  }
+
+  UserProfile copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    String? profileImageUrl,
+    List<Book>? books,
+  }) {
+    return UserProfile(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      name: name ?? this.name!,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      books: books ?? this.books,
     );
   }
 }

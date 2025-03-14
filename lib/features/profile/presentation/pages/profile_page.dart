@@ -61,6 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(width: double.infinity),
                 // profile image
                 profileImage(state.user.profileImageUrl ?? ''),
 
