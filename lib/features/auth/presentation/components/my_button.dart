@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
+  final Icon? prefixIcon;
   final String text;
   final void Function()? onPressed;
-  const MyButton({super.key, required this.text, required this.onPressed});
+  const MyButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.prefixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +23,22 @@ class MyButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: TextStyle(color: Theme.of(context).colorScheme.onSecondary),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // icon
+              prefixIcon != null
+                  ? Row(children: [prefixIcon!, SizedBox(width: 10)])
+                  : Container(),
+
+              // text
+              Text(
+                text,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+              ),
+            ],
           ),
         ),
       ),

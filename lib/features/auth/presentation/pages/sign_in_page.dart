@@ -41,6 +41,7 @@ class SignInPage extends StatelessWidget {
           ),
         ),
         child: SafeArea(
+          bottom: false,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -67,7 +68,7 @@ class SignInPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 50),
+                    SizedBox(height: 30),
                     // email text field
                     MyTextField(
                       controller: emailController,
@@ -96,19 +97,22 @@ class SignInPage extends StatelessWidget {
 
                     MyButton(text: 'Sign In', onPressed: onSignInPressed),
 
+                    SizedBox(height: 10),
+
                     // google sign in btn
-                    IconButton(
+                    MyButton(
+                      text: 'Sign In With Google',
+                      prefixIcon: Icon(FontAwesomeIcons.google),
                       onPressed: () {
                         context.read<AuthBloc>().add(AuthSignInWithGoogle());
                       },
-                      icon: Icon(FontAwesomeIcons.google),
                     ),
 
                     //navigator -> sign up page
                     TextButton(
                       onPressed: togglePages,
                       child: Text(
-                        'click here to create a user',
+                        'Sign Up With Email And Password',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
