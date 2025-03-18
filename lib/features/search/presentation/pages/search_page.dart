@@ -8,32 +8,65 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   final String currUid;
   const SearchPage({super.key, required this.currUid});
 
   @override
-  Widget build(BuildContext context) {
-    final searchController = TextEditingController();
+  State<SearchPage> createState() => _SearchPageState();
+}
 
-    Timer? debounceTimer; // Timer to handle debounce
+class _SearchPageState extends State<SearchPage> {
+  final TextEditingController searchController = TextEditingController();
+  Timer? debounceTimer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a listener to trigger rebuild when text changes
+    searchController.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    debounceTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // text field
+            // Search text field
             TextField(
+              controller: searchController,
               decoration: InputDecoration(
+                suffixIcon:
+                    searchController.text.isNotEmpty
+                        ? IconButton(
+                          onPressed: () {
+                            searchController.clear();
+                            context.read<SearchBloc>().add(SearchClearSearch());
+                            setState(() {}); // Trigger rebuild to remove icon
+                          },
+                          icon: const Icon(Icons.cancel, color: Colors.grey),
+                        )
+                        : null,
                 prefixIcon: Icon(
                   FontAwesomeIcons.magnifyingGlass,
                   color: Colors.grey.shade300,
                 ),
               ),
-              controller: searchController,
-
               onChanged: (value) {
-                // Cancel any existing timer
                 debounceTimer?.cancel();
 
                 if (value.isNotEmpty) {
@@ -46,20 +79,19 @@ class SearchPage extends StatelessWidget {
               },
             ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             BlocConsumer<SearchBloc, SearchState>(
               builder: (context, state) {
-                // loading
                 if (state is SearchLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return Expanded(
+                    child: const Center(child: CircularProgressIndicator()),
+                  );
                 }
-
-                // loaded
                 if (state is SearchLoaded) {
                   final books = state.books;
                   if (books.isEmpty) {
-                    return Center(child: Text('nothing found'));
+                    return const Center(child: Text('Nothing found'));
                   }
                   return Expanded(
                     child: Padding(
@@ -68,10 +100,7 @@ class SearchPage extends StatelessWidget {
                     ),
                   );
                 }
-                // default
-                else {
-                  return Center(child: Text('search for books'));
-                }
+                return const Center(child: Text('Search for books'));
               },
               listener: (context, state) {
                 if (state is SearchErrors) {

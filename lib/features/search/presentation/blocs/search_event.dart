@@ -6,3 +6,6 @@ class SearchBookByTitleReq extends SearchEvent {
   final String title;
   SearchBookByTitleReq({required this.title});
 }
+
+// clear serarch
+class SearchClearSearch extends SearchEvent {}

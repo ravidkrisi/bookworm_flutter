@@ -10,6 +10,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc({required this.repo}) : super(SearchInit()) {
     // register events handlers
     on<SearchBookByTitleReq>(_onFetchBooksByTitle);
+    on<SearchClearSearch>(_onClearSearch);
   }
 
   // handlers
@@ -21,6 +22,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       emit(SearchLoading());
       final books = await repo.searchBookByTitle(event.title);
       emit(SearchLoaded(books: books));
+    } catch (e) {
+      emit(SearchErrors(message: '$e'));
+    }
+  }
+
+  void _onClearSearch(
+    SearchClearSearch event,
+    Emitter<SearchState> emit,
+  ) async {
+    try {
+      emit(SearchLoaded(books: []));
     } catch (e) {
       emit(SearchErrors(message: '$e'));
     }
