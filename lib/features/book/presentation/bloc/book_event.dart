@@ -17,6 +17,18 @@ class UpdateBookStatus extends BookEvent {
   UpdateBookStatus({required this.userId, required this.book});
 }
 
+// update book review id
+class UpdateBookReviewId extends BookEvent {
+  final String userId;
+  final String bookId;
+  final String reviewId;
+  UpdateBookReviewId({
+    required this.userId,
+    required this.bookId,
+    required this.reviewId,
+  });
+}
+
 // delete book
 class DeleteUserBook extends BookEvent {
   final String userId;

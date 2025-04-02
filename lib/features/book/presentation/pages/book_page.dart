@@ -175,10 +175,12 @@ class _BookPageState extends State<BookPage> {
                 Align(
                   child: Text(
                     'Reviews',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   alignment: Alignment.topLeft,
                 ),
+
+                SizedBox(height: 10),
 
                 state.reviews.isEmpty
                     ?
@@ -247,22 +249,24 @@ class _BookPageState extends State<BookPage> {
                 },
               ),
 
-              // status read show add review to navigate add review page
+              // status read & no review -> show add review to navigate add review page
               (state.book?.status == BookStatus.read)
-                  ? ElevatedButton(
-                    onPressed:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => AddReviewPage(
-                                  book: widget.book,
-                                  userId: userId,
-                                ),
-                          ),
-                        ),
-                    child: Text('Add Review'),
-                  )
+                  ? (state.book?.reviewId == null)
+                      ? ElevatedButton(
+                        onPressed:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => AddReviewPage(
+                                      book: widget.book,
+                                      userId: userId,
+                                    ),
+                              ),
+                            ),
+                        child: Text('Add Review'),
+                      )
+                      : Container()
                   : Container(),
             ],
           );

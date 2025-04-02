@@ -12,6 +12,7 @@ import 'package:bookworm/features/auth/presentation/pages/auth_page.dart';
 import 'package:bookworm/features/profile/data/firebase_profile_repo.dart';
 import 'package:bookworm/features/profile/presentation/blocs/profile_bloc.dart';
 import 'package:bookworm/features/review/data/firebase_review_repo.dart';
+import 'package:bookworm/features/review/domain/repos/review_repo.dart';
 import 'package:bookworm/features/review/presentation/bloc/review_bloc.dart';
 import 'package:bookworm/features/search/data/search_repo_impl.dart';
 import 'package:bookworm/features/search/presentation/blocs/search_bloc.dart';
@@ -34,7 +35,12 @@ class MyApp extends StatelessWidget {
   // search repo
   final searchRepo = SearchRepoImpl(db: BooksRemoteDataSourceImpl());
   // reviews repo
-  final reviewsRepo = FirebaseReviewRepo();
+  final reviewsRepo = ReviewRepoImpl(
+    reviewRemoteDB: FirebaseReviewRepo(),
+    firebaseProfileRepo: FirebaseProfileRepo(
+      storageRepo: FirebaseStorageRepo(),
+    ),
+  );
 
   MyApp({super.key});
 

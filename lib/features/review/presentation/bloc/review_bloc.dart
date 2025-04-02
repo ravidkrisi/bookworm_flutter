@@ -18,23 +18,11 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   void _onAddReview(ReviewAddReview event, Emitter<ReviewState> emit) async {
     try {
       await repo.createReview(event.review);
+      add(ReviewGetReviewsByBookId(bookId: event.review.bookId));
     } catch (e) {
       emit(ReviewErrors(message: e.toString()));
     }
   }
-
-  // void _onGetReviewsByUserId(
-  //   ReviewGetReviewsByUserId event,
-  //   Emitter<ReviewState> emit,
-  // ) async {
-  //   try {
-  //     emit(ReviewLoading());
-  //     final reviews = await repo.getReviewsByUserId(event.userId);
-  //     emit(ReviewLoaded(reviews: reviews));
-  //   } catch (e) {
-  //     emit(ReviewErrors(message: e.toString()));
-  //   }
-  // }
 
   void _onGetReviewsByBookId(
     ReviewGetReviewsByBookId event,
@@ -49,17 +37,4 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       emit(ReviewErrors(message: e.toString()));
     }
   }
-
-  // void _onGetBookRating(
-  //   ReviewGetBookRating event,
-  //   Emitter<ReviewState> emit,
-  // ) async {
-  //   try {
-  //     emit(ReviewLoading());
-  //     final reviews = await repo.getReviewsByBookId(event.bookId);
-  //     emit(ReviewLoaded(reviews: reviews));
-  //   } catch (e) {
-  //     emit(ReviewErrors(message: e.toString()));
-  //   }
-  // }
 }

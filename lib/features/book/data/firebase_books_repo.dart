@@ -11,7 +11,15 @@ abstract class FirebaseBookRepo {
   // get book from firebase if exist
   Future<Book?> getBookFromFirebase(String userId, String bookId);
 
+  // delete book from user collection
   Future<void> deleteBookFromdb(String userId, String bookId);
+
+  // update book review id
+  Future<void> updateBookReviewId(
+    String userId,
+    String bookId,
+    String reviewId,
+  );
 }
 
 class FirebaseBookRepoImpl implements FirebaseBookRepo {
@@ -108,6 +116,26 @@ class FirebaseBookRepoImpl implements FirebaseBookRepo {
       await docRef.delete();
     } catch (e) {
       throw Exception('error deleting book from firebase: $e');
+    }
+  }
+
+  @override
+  Future<void> updateBookReviewId(
+    String userId,
+    String bookId,
+    String reviewId,
+  ) async {
+    try {
+      // get book doc
+      final docRef = await _getBookDocRef(userId, bookId);
+      final doc = await docRef.get();
+
+      // doc exists -> update book status
+      if (doc.exists) {
+        await docRef.update({'review_id': reviewId});
+      }
+    } catch (e) {
+      throw Exception('failed to update book status: $e');
     }
   }
 }

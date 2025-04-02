@@ -28,6 +28,7 @@ class Book {
   final String coverUrl;
   final int firstPublishYear;
   final BookStatus? status;
+  final String? reviewId;
 
   Book({
     required this.id,
@@ -36,6 +37,7 @@ class Book {
     required this.coverUrl,
     required this.firstPublishYear,
     this.status,
+    this.reviewId,
   });
 
   // JSON
@@ -47,6 +49,7 @@ class Book {
       'cover_url': coverUrl,
       'first_publish_year': firstPublishYear,
       'status': status?.name,
+      'review_id': reviewId,
     };
   }
 
@@ -59,6 +62,7 @@ class Book {
       firstPublishYear: json['first_publish_year'] ?? 0,
       status:
           json['status'] != null ? BookStatus.fromString(json['status']) : null,
+      reviewId: json['review_id'],
     );
   }
 
@@ -69,6 +73,7 @@ class Book {
     String? coverUrl,
     int? firstPublishYear,
     BookStatus? status,
+    String? reviewId,
   }) {
     return Book(
       id: id ?? this.id,
@@ -77,6 +82,7 @@ class Book {
       coverUrl: coverUrl ?? this.coverUrl,
       firstPublishYear: firstPublishYear ?? this.firstPublishYear,
       status: status ?? this.status,
+      reviewId: reviewId ?? this.reviewId,
     );
   }
 }

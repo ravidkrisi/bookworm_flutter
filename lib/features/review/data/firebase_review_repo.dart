@@ -1,11 +1,18 @@
-import 'package:bookworm/features/review/domain/entities/review.dart';
-import 'package:bookworm/features/review/domain/repos/review_repo.dart';
+import 'package:bookworm/features/review/data/models/review_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseReviewRepo implements ReviewRepo {
+abstract class ReviewRemoteDB {
+  Future<void> createReview(ReviewModel review);
+  Future<List<ReviewModel>> getReviewsByBookId(String bookId);
+  Future<List<ReviewModel>> getReviewsByUserId(String userId);
+  Future<double?> getBookRating(String bookId);
+}
+
+class FirebaseReviewRepo implements ReviewRemoteDB {
   final reviewsCollection = FirebaseFirestore.instance.collection('reviews');
+
   @override
-  Future<void> createReview(Review review) async {
+  Future<void> createReview(ReviewModel review) async {
     try {
       await reviewsCollection.doc(review.id).set(review.toJson());
     } catch (e) {
@@ -13,7 +20,7 @@ class FirebaseReviewRepo implements ReviewRepo {
     }
   }
 
-  Future<List<Review>> _fetchEqualTo(String key, String value) async {
+  Future<List<ReviewModel>> _fetchEqualTo(String key, String value) async {
     try {
       // get query
       final querySnapshot =
@@ -23,10 +30,10 @@ class FirebaseReviewRepo implements ReviewRepo {
       final docs = querySnapshot.docs;
 
       // docs -> reviews list
-      List<Review> reviews = [];
+      List<ReviewModel> reviews = [];
 
       for (var doc in docs) {
-        reviews.add(Review.fromJson(doc.data()));
+        reviews.add(ReviewModel.fromJson(doc.data()));
       }
 
       return reviews;
@@ -36,7 +43,7 @@ class FirebaseReviewRepo implements ReviewRepo {
   }
 
   @override
-  Future<List<Review>> getReviewsByBookId(String bookId) {
+  Future<List<ReviewModel>> getReviewsByBookId(String bookId) {
     try {
       return _fetchEqualTo('bookId', bookId);
     } catch (e) {
@@ -45,7 +52,7 @@ class FirebaseReviewRepo implements ReviewRepo {
   }
 
   @override
-  Future<List<Review>> getReviewsByUserId(String userId) {
+  Future<List<ReviewModel>> getReviewsByUserId(String userId) {
     try {
       return _fetchEqualTo('userId', userId);
     } catch (e) {

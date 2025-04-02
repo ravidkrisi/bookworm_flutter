@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bookworm/features/review/domain/entities/review.dart';
+import 'package:bookworm/features/review/data/models/review_model.dart';
 
 abstract class ReviewEvent {}
 
 // add review
 class ReviewAddReview extends ReviewEvent {
-  final Review review;
+  final ReviewModel review;
   ReviewAddReview({required this.review});
 }
 

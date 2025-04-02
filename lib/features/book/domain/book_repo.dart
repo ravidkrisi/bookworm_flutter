@@ -9,8 +9,14 @@ abstract class BookRepo {
   Future<Book?> getUserBook(String userId, String bookId);
 
   // delete book for user's list
-
   Future<void> deleteUserBook(String userId, String bookId);
+
+  // update book review id
+  Future<void> updateBookReviewId(
+    String userId,
+    String bookId,
+    String reviewId,
+  );
 }
 
 class BookRepoImpl implements BookRepo {
@@ -43,6 +49,19 @@ class BookRepoImpl implements BookRepo {
       await firebaseBookRepo.deleteBookFromdb(userId, bookId);
     } catch (e) {
       throw Exception('error deleting book: $e');
+    }
+  }
+
+  @override
+  Future<void> updateBookReviewId(
+    String userId,
+    String bookId,
+    String reviewId,
+  ) async {
+    try {
+      await firebaseBookRepo.updateBookReviewId(userId, bookId, reviewId);
+    } catch (e) {
+      rethrow;
     }
   }
 }

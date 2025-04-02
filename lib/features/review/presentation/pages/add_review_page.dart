@@ -1,4 +1,7 @@
+import 'package:bookworm/features/book/presentation/bloc/book_bloc.dart';
+import 'package:bookworm/features/book/presentation/bloc/book_event.dart';
 import 'package:bookworm/features/books/domain/entities/book.dart';
+import 'package:bookworm/features/review/data/models/review_model.dart';
 import 'package:bookworm/features/review/domain/entities/review.dart';
 import 'package:bookworm/features/review/presentation/bloc/review_bloc.dart';
 import 'package:bookworm/features/review/presentation/bloc/review_event.dart';
@@ -30,7 +33,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
     final rating = _ratingValue.round();
 
     // create review
-    final review = Review(
+    final review = ReviewModel(
       id: Uuid().v4(),
       bookId: widget.book.id,
       userId: widget.userId,
@@ -40,6 +43,13 @@ class _AddReviewPageState extends State<AddReviewPage> {
     );
 
     context.read<ReviewBloc>().add(ReviewAddReview(review: review));
+    context.read<BookBloc>().add(
+      UpdateBookReviewId(
+        userId: widget.userId,
+        bookId: widget.book.id,
+        reviewId: review.id,
+      ),
+    );
 
     Navigator.pop(context);
   }
